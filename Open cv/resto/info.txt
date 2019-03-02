@@ -1,0 +1,5 @@
+rerawdata/2.bmp 1 0 254 57 74
+rerawdata/3.bmp 1 1 239 66 83
+rerawdata/4.bmp 1 89 271 133 124
+rerawdata/5.bmp 1 56 234 102 109
+rerawdata/6.bmp 1 70 270 62 74
