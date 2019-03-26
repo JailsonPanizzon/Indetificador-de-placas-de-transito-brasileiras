@@ -4,6 +4,7 @@ import numpy as np
 import os
 import PIL
 import math
+import time
 def equaliza(img):
     b, g, r = cv2.split(img)
     red = cv2.equalizeHist(r)
@@ -27,8 +28,8 @@ def teste(img):
         i+=1
     return cv2.merge((r, g, b))
 
-placa = cv2.CascadeClassifier('boards.xml')
-cap = cv2.VideoCapture("VID_20180917_180839_1.avi")
+placa = cv2.CascadeClassifier('placas3.xml')
+cap = cv2.VideoCapture("placas.avi")
 right = 0
 wrong = 71
 num = 0
@@ -44,11 +45,10 @@ if not(os.path.isdir('./resto')):
 while True:
     find = False
     ret, img = cap.read()
-    #img = equaliza(img)
-    gray = cv2.cvtColor(img , cv2.COLOR_BGR2GRAY)
+    img2 = img[int(img.shape[0]*0.3):img.shape[0],int(img.shape[1]*0.5):img.shape[1]]
+    img2 = equaliza(img2)
+    gray = cv2.cvtColor(img2 , cv2.COLOR_BGR2GRAY)
     i = 1
-    cv2.imwrite("teste.jpg", gray)
-    gra = cv2.imread("teste.jpg")
     '''#detecção de bordas
     while(i < gray.shape[0]-1):
         j = 1
@@ -68,7 +68,8 @@ while True:
         print(i)
         i+=1
     '''
-    board = placa.detectMultiScale(gray, 1.9,4)
+    cv2.imshow("after", img)
+    board = placa.detectMultiScale(gray, 1.9,5)
     
 
     for (x,y,w,h) in board:
@@ -80,7 +81,8 @@ while True:
     
     if find:
         print(board)
-        val = input("certa(1) ou errada(2):\n")
+        time.sleep(1)
+        val =1
         if(val == '1'):
            cv2.imwrite("Right/"+str(right)+".jpg",gray)
            right+=1
