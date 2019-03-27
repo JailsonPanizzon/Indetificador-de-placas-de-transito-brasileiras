@@ -28,7 +28,7 @@ def teste(img):
         i+=1
     return cv2.merge((r, g, b))
 
-placa = cv2.CascadeClassifier('placas3.xml')
+placa = cv2.CascadeClassifier('placacascade3.xml')
 cap = cv2.VideoCapture("placas.avi")
 right = 0
 wrong = 71
