@@ -29,7 +29,7 @@ def teste(img):
     return cv2.merge((r, g, b))
 
 placa = cv2.CascadeClassifier('placacascade3.xml')
-cap = cv2.VideoCapture("placas.avi")
+cap = cv2.VideoCapture("video ensolarado.avi")
 right = 0
 wrong = 71
 num = 0
@@ -82,8 +82,8 @@ while True:
     if find:
         print(board)
         time.sleep(1)
-        val =1
-        if(val == '1'):
+        val = 1
+        if(val == 1):
            cv2.imwrite("Right/"+str(right)+".jpg",gray)
            right+=1
         else:
