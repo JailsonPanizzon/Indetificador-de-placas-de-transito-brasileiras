@@ -31,7 +31,7 @@ def teste(img):
 #Abra arquivo XML com as features de reconhecimento
 placa = cv2.CascadeClassifier('placacascade3.xml')
 #seleciona o video de entrada
-cap = cv2.VideoCapture("video ensolarado.avi")
+cap = cv2.VideoCapture("video ensolarado .avi")
 right = 0
 wrong = 71
 num = 0
@@ -50,7 +50,7 @@ while True:
     #dicionario para salvar o frame em uma imagem
     ret, img = cap.read()
     img2 = img[int(img.shape[0]*0.3):img.shape[0],int(img.shape[1]*0.5):img.shape[1]]
-    img2 = equaliza(img2)
+    #img2 = equaliza(img2)
     gray = cv2.cvtColor(img2 , cv2.COLOR_BGR2GRAY)
     i = 1
     '''#detecção de bordas
@@ -84,24 +84,8 @@ while True:
     #mostra a imagem com o retangulo desenhado
     cv2.imshow('img',gray)
     k=cv2.waitKey(30) & 0xff
-    
-    if find:
-        print(board)
-        time.sleep(1)
-        val = 1
-        if(val == 1):
-           cv2.imwrite("Right/"+str(right)+".jpg",gray)
-           right+=1
-        else:
-           gra = cv2.imread("teste.jpg")
-           corte = gra[board[0][1]:board[0][1]+board[0][3],board[0][0]:board[0][0]+board[0][2]]
-           cv2.imshow('crop', corte)
-           corte = cv2.resize(gra,(640,480))
-           cv2.imwrite("wrong/"+str(wrong)+".jpg",corte)
-           wrong+=1
-    else:
-        cv2.imwrite("resto/"+str(num)+".bmp",gray)
-        num+=1   
+    if(find):
+        time.sleep(2)   
 
     if k == 27:
         break
