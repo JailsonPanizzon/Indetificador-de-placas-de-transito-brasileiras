@@ -1,3 +1,5 @@
+import colorsys
+
 import cv2
 import time
 import numpy as np
@@ -5,6 +7,15 @@ import os
 import PIL
 import math
 import time
+
+from PIL import Image
+
+
+def convert(rgb):
+    hsv=colorsys.rgb_to_hsv(rgb[0],rgb[1],rgb[2])
+    return hsv
+
+
 def equaliza(img):
     #equaliza imagens nos canais R,G,B
     b, g, r = cv2.split(img)
@@ -13,6 +24,24 @@ def equaliza(img):
     blue = cv2.equalizeHist(b)
     blue=b
     return cv2.merge((blue, green, red))
+
+def day_or_night(im):
+    px=im.load()    
+    j=im.size[1]-1
+    soma=0
+    while(j>=0):
+        i=0
+        while(i<im.size[0]-1):
+            ij=convert(px[i,j])
+            soma+=ij[2]
+            i+=10
+        j-=10
+    soma=soma//((im.size[0]*im.size[1])/100)
+    if(soma >60):
+        print("day")
+    else:
+        print("night")
+    return soma
 
 def teste(img):
     b, g, r = cv2.split(img)
@@ -28,10 +57,13 @@ def teste(img):
             j+=1
         i+=1
     return cv2.merge((r, g, b))
+
+
+
 #Abra arquivo XML com as features de reconhecimento
 placa = cv2.CascadeClassifier('placacascade3.xml')
 #seleciona o video de entrada
-cap = cv2.VideoCapture("video ensolarado .avi")
+cap = cv2.VideoCapture("video noite.avi")
 right = 0
 wrong = 71
 num = 0
@@ -49,8 +81,11 @@ while True:
     find = False
     #dicionario para salvar o frame em uma imagem
     ret, img = cap.read()
+    cv2.imwrite("teste.jpg", img)
+    im = Image.open("teste.jpg")
+    t = day_or_night(im)
     img2 = img[int(img.shape[0]*0.3):img.shape[0],int(img.shape[1]*0.5):img.shape[1]]
-    #img2 = equaliza(img2)
+    img2 = equaliza(img2)
     gray = cv2.cvtColor(img2 , cv2.COLOR_BGR2GRAY)
     i = 1
     '''#detecção de bordas

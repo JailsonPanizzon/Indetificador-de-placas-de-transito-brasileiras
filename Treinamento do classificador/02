@@ -1,0 +1,1 @@
+-data cascades -vec vector/vector.vec -bg negative/bg.txt -numPos 374 -numNeg 2198 -numStages 11 -mem 950 -mode ALL -w 50 -h 50 

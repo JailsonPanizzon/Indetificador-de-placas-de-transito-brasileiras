@@ -9,8 +9,8 @@ def montar_negativas():
     urls_imagens_negativas = urllib.request.urlopen(link_imagens_negativas).read().decode()
 
 
-    if not os.path.exists('negativas'):
-        os.makedirs('negativas')
+    if not os.path.exists('negatives'):
+        os.makedirs('negatives')
 
     nmr_imagem=1
 
@@ -24,16 +24,10 @@ def montar_negativas():
         except Exception as e:
             print(str(e))
 def gera_list_neg():
-    for file_type in ['negativas']:
-        for img in os.listdir(file_type):
-            if file_type == 'negativas':
-                line = file_type+'/'+img+'\n'
-                with open('bg.txt','a') as f:
-                    f.write(line)
-            elif file_type=='positivas':
-                line = file_type+'/'+img+'1 0 0 150 150\n'
-                with open('info.dat','a') as f:
-                    f.write(line)
+        for img in os.listdir():
+            line = img+'\n'
+            with open('bg.txt','a') as f:
+                f.write(line)
 '''def cria_amostras():
     subprocess.call(['opencv_createsamples -img 57.jpg -bg bg.txt -info info/info.lst -pngoutput info -maxxangle 0.5 -maxyangle 0.5 -maxzangle 0.5 -num 100'])
     #opencv_createsamples -info info/info.lst -num 100 -w 69 -h 69 -vec positives.vec
@@ -41,6 +35,5 @@ def gera_list_neg():
 def treinar():
     opencv_traincascade -data data -vec positives.vec -bg bg.txt -numPos 200-numNeg 100 -numStages 5 -w 69 -h 20
 '''
-montar_negativas()
-
+gera_list_neg()
 
