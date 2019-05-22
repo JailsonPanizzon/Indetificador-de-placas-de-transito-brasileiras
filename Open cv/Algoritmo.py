@@ -61,9 +61,9 @@ def teste(img):
 
 
 #Abra arquivo XML com as features de reconhecimento
-placa = cv2.CascadeClassifier('placacascade3.xml')
+placa = cv2.CascadeClassifier('cascade2.xml')
 #seleciona o video de entrada
-cap = cv2.VideoCapture("video noite.avi")
+cap = cv2.VideoCapture("video ensolarado.avi")
 right = 0
 wrong = 71
 num = 0
@@ -85,8 +85,8 @@ while True:
     im = Image.open("teste.jpg")
     t = day_or_night(im)
     img2 = img[int(img.shape[0]*0.3):img.shape[0],int(img.shape[1]*0.5):img.shape[1]]
-    img2 = equaliza(img2)
-    gray = cv2.cvtColor(img2 , cv2.COLOR_BGR2GRAY)
+    #img2 = equaliza(img2)
+    gray = img2#cv2.cvtColor(img2 , cv2.COLOR_BGR2GRAY)
     i = 1
     '''#detecção de bordas
     while(i < gray.shape[0]-1):
@@ -109,7 +109,7 @@ while True:
     '''
     cv2.imshow("after", img)
     #aplica o classificador na imagem em tons de cinza e equalida
-    board = placa.detectMultiScale(gray, 1.9,5)
+    board = placa.detectMultiScale(gray, 1.8,1)
     
     #desenha um retangulo tendo como base os pontos salvos no comando anterior no vetor board
     for (x,y,w,h) in board:
