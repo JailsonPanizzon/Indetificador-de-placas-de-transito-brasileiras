@@ -63,29 +63,18 @@ def teste(img):
 #Abra arquivo XML com as features de reconhecimento
 placa = cv2.CascadeClassifier('cascade2.xml')
 #seleciona o video de entrada
-cap = cv2.VideoCapture("video ensolarado.avi")
-right = 0
-wrong = 71
-num = 0
-mask = [[-1, 1, -1],
-        [ 1, 2, 1],
-        [-1, 1, -1]]
-if not(os.path.isdir('./right')):
-    os.mkdir('./Right')
-if not(os.path.isdir('./wrong')):
-    os.mkdir('./wrong')
-if not(os.path.isdir('./resto')):
-    os.mkdir('./resto')
+cap = cv2.VideoCapture("avaliacao/serra ubatuba.avi")
+if not(os.path.isdir('./encontradas')):
+    os.mkdir('./encontradas')
+cont = 0
 #loop para aplicar o identificador em cada frame    
 while True:
     find = False
     #dicionario para salvar o frame em uma imagem
     ret, img = cap.read()
-    cv2.imwrite("teste.jpg", img)
-    im = Image.open("teste.jpg")
-    t = day_or_night(im)
-    img2 = img[int(img.shape[0]*0.3):img.shape[0],int(img.shape[1]*0.5):img.shape[1]]
-    #img2 = equaliza(img2)
+    #t = day_or_night(im)
+    img2 = img[int(img.shape[0]*0.1):img.shape[0],int(img.shape[1]*0.5):img.shape[1]]
+    img2 = equaliza(img2)
     gray = img2#cv2.cvtColor(img2 , cv2.COLOR_BGR2GRAY)
     i = 1
     '''#detecção de bordas
@@ -109,12 +98,14 @@ while True:
     '''
     cv2.imshow("after", img)
     #aplica o classificador na imagem em tons de cinza e equalida
-    board = placa.detectMultiScale(gray, 1.8,1)
+    board = placa.detectMultiScale(gray, 1.1,1)
     
     #desenha um retangulo tendo como base os pontos salvos no comando anterior no vetor board
     for (x,y,w,h) in board:
         find = True
         cv2.rectangle(gray , (x,y),(x+w, y+h), (255,0,0),2)
+        cv2.imwrite("encontradas/"+str(cont)+".jpg",img)
+        cont+=1
         print("placa")
     #mostra a imagem com o retangulo desenhado
     cv2.imshow('img',gray)
